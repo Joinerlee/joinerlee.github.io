@@ -168,39 +168,62 @@
         .skill-badge {
             display: inline-flex;
             align-items: center;
-            padding: 0.5rem 1rem;
-            margin: 0.25rem;
-            border-radius: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            padding: 0.6rem 1.2rem;
+            margin: 0.3rem;
+            border-radius: 1.5rem;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        .skill-badge:hover::before {
+            left: 100%;
         }
         .skill-badge:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.05);
+            background: #f9fafb;
+            border-color: #d1d5db;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-        .skill-badge img {
-            width: 1.25rem;
-            height: 1.25rem;
-            margin-right: 0.5rem;
+        .skill-badge .badge-icon {
+            width: 1.3rem;
+            height: 1.3rem;
+            margin-right: 0.6rem;
             flex-shrink: 0;
+            border-radius: 0.25rem;
         }
-        .skill-badge.primary {
-            background-color: rgba(96, 165, 250, 0.1);
-            border-color: rgba(96, 165, 250, 0.3);
-            color: #60a5fa;
-        }
-        .skill-badge.secondary {
-            background-color: rgba(250, 204, 21, 0.1);
-            border-color: rgba(250, 204, 21, 0.3);
-            color: #facc15;
-        }
-        .skill-badge.accent {
-            background-color: rgba(52, 211, 153, 0.1);
-            border-color: rgba(52, 211, 153, 0.3);
-            color: #34d399;
+
+        /* Technology-specific badge styles - All unified to clean white background */
+        .badge-python,
+        .badge-pytorch,
+        .badge-tensorflow,
+        .badge-huggingface,
+        .badge-langchain,
+        .badge-fastapi,
+        .badge-spring,
+        .badge-c,
+        .badge-matlab,
+        .badge-git,
+        .badge-docker,
+        .badge-scikit,
+        .badge-ai,
+        .badge-default {
+            background: white;
+            color: #374151;
+            border: 1px solid #e5e7eb;
         }
         .skill-section-container {
             margin-bottom: 2rem;
@@ -380,174 +403,116 @@
             <div>
                 <h2 class="section-title">기술 스택</h2>
                 <div class="card mb-8">
-                    <h3 class="skills-card-title">주요 핵심 기술</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon-secondary"> <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12L17 13.75a4.5 4.5 0 01-3.09 3.09L12 18.75l-1.156-.813a4.5 4.5 0 01-3.09-3.09L6.25 12l1.156-.813a4.5 4.5 0 013.09-3.09L12 5.25l1.156.813a4.5 4.5 0 013.09 3.09L18.75 12l-1.156.813a4.5 4.5 0 01-3.09 3.09L13.75 15l.813-2.846a4.5 4.5 0 003.09-3.09L18.25 12z" />
-                                </svg>
-                                <span class="skill-item-name">LoRA 파인튜닝</span>
-                            </div>
-                            <p class="skill-item-description">대규모 언어 모델(LLM) 또는 비전 모델을 특정 작업이나 도메인에 맞게 효율적으로 미세 조정하는 기술입니다. 적은 파라미터만 업데이트하여 계산 비용과 시간을 절약하면서 높은 성능을 달성합니다.</p>
+                    <h3 class="skills-card-title">AI/ML 핵심 기술</h3>
+                    <div class="skill-badges-container">
+                        <div class="skill-badge badge-ai">
+                            LoRA & 양자화 파인튜닝 (Unsloth)
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                                </svg>
-                                <span class="skill-item-name">RAG (Retrieval Augmented Generation)</span>
-                            </div>
-                            <p class="skill-item-description">외부 지식 베이스에서 관련 정보를 검색하여 대규모 언어 모델의 답변 생성을 보강하는 기술입니다. 모델이 최신 정보를 반영하고 환각(hallucination)을 줄이는 데 효과적입니다.</p>
+                        <div class="skill-badge badge-ai">
+                            RAG (Retrieval Augmented Generation)
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon-secondary"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.354a15.056 15.056 0 01-4.5 0m4.5 0v-.375c0-.621-.504-1.125-1.125-1.125h-1.5c-.621 0-1.125.504-1.125 1.125v.375m-3.75 0V12A2.25 2.25 0 019.75 9.75h4.5A2.25 2.25 0 0116.5 12v6.75m0 0h-1.5m1.5 0H18" />
-                                </svg>
-                                <span class="skill-item-name">머신러닝 기본 원리 이해</span>
-                            </div>
-                            <p class="skill-item-description">지도 학습, 비지도 학습, 강화 학습 등 다양한 머신러닝 알고리즘의 수학적 원리와 작동 방식에 대한 깊이 있는 이해를 바탕으로 모델 선택, 성능 평가, 문제 해결 능력을 갖추었습니다.</p>
+                        <div class="skill-badge badge-ai">
+                            머신러닝 기본 원리
                         </div>
-                        <div class="skill-item-container">
-                           <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon"> <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 100 15 7.5 7.5 0 000-15z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 10.5V15a4.5 4.5 0 004.5-4.5H10.5z" />
-                                </svg>
-                                <span class="skill-item-name">상태 추정 알고리즘 (EKF, DEKF)</span>
-                            </div>
-                            <p class="skill-item-description">확장 칼만 필터(EKF) 및 이중 확장 칼만 필터(DEKF)와 같은 고급 상태 추정 알고리즘 활용 경험이 있습니다. BMS 연구에서 배터리의 SOC, SOH를 실시간으로 정밀하게 추정하여 시스템 효율성과 안정성을 최적화했습니다.</p>
+                        <div class="skill-badge badge-ai">
+                            상태 추정 알고리즘 (EKF, DEKF)
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon-secondary"> <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l9 7.5L6.75 8.25zM6.75 15.75l9-7.5l-9 7.5z" />
-                                </svg>
-                                <span class="skill-item-name">TTS 시스템 구현</span>
-                            </div>
-                            <p class="skill-item-description">자연스럽고 표현력 있는 음성을 합성하는 Text-to-Speech 시스템 설계 및 구현 경험이 있습니다. 음성 데이터 전처리, 모델 학습, API 개발을 포함하여 사용자 맞춤형 음성 서비스를 제공할 수 있습니다.</p>
+                        <div class="skill-badge badge-ai">
+                            TTS 시스템 구현
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/fastapi.svg" alt="FastAPI 로고" class="text-white"/> <span class="skill-item-name">백엔드 개발 (FastAPI)</span>
-                            </div>
-                            <p class="skill-item-description">Python 기반의 FastAPI를 활용한 고성능 백엔드 API 개발 경험이 있습니다. 비동기 처리, 데이터 유효성 검사 등을 통해 안정적이고 확장 가능한 서비스를 구축합니다.</p>
-                        </div>
-                         <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/springboot.svg" alt="SpringBoot 로고" class="text-white"/> <span class="skill-item-name">백엔드 개발 (SpringBoot)</span>
-                            </div>
-                            <p class="skill-item-description">Java 기반의 SpringBoot 프레임워크를 활용한 엔터프라이즈급 백엔드 시스템 개발 경험이 있습니다. RESTful API 설계, 데이터베이스 연동, 보안 기능 구현 등에 익숙합니다.</p>
+                        <div class="skill-badge badge-ai">
+                            KV 캐싱 & 모델 배포 최적화
                         </div>
                     </div>
                 </div>
 
                 <div class="card mt-8 mb-8">
                     <h3 class="skills-card-title">프로그래밍 언어</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/python.svg" alt="Python 로고"/>
-                                <span class="skill-item-name">Python (주력)</span>
-                            </div>
-                            <p class="skill-item-description">데이터 분석, 머신러닝/딥러닝 모델 개발, 웹 백엔드 구축 등 AI 개발 전반에 능숙하게 활용합니다. PyTorch, TensorFlow 등 다양한 라이브러리 사용 경험이 풍부합니다.</p>
+                    <div class="skill-badges-container">
+                        <div class="skill-badge badge-python">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="badge-icon">
+                            Python (주력)
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/c.svg" alt="C 로고"/>
-                                <span class="skill-item-name">C (with STM32)</span>
-                            </div>
-                            <p class="skill-item-description">STM32 마이크로컨트롤러를 활용한 펌웨어 개발 및 임베디드 시스템 제어 경험이 있습니다. 하드웨어 직접 제어 및 최적화가 중요한 BMS 연구 등에서 활용했습니다.</p>
+                        <div class="skill-badge badge-c">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" class="badge-icon">
+                            C (with STM32)
                         </div>
-                         <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/mathworks.svg" alt="MATLAB 로고"/>
-                                <span class="skill-item-name">MATLAB</span>
-                            </div>
-                            <p class="skill-item-description">BMS 제어 연구 시 알고리즘 개발, 시뮬레이션 및 데이터 분석에 활용하였으며, 제어 시스템 설계 및 검증 경험을 보유하고 있습니다.</p>
+                        <div class="skill-badge badge-matlab">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" alt="MATLAB" class="badge-icon">
+                            MATLAB
+                        </div>
+                        <div class="skill-badge badge-spring">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="badge-icon">
+                            Java
                         </div>
                     </div>
                 </div>
 
                 <div class="card mb-8">
                     <h3 class="skills-card-title">딥러닝/AI 프레임워크</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/pytorch.svg" alt="PyTorch 로고"/>
-                                <span class="skill-item-name">PyTorch</span>
-                            </div>
-                            <p class="skill-item-description">유연성과 Python 친화성을 바탕으로 다양한 딥러닝 모델(CNN, RNN, Transformers 등) 연구 및 개발을 수행합니다. 동적 계산 그래프를 활용한 효율적인 모델 구축이 가능합니다.</p>
+                    <div class="skill-badges-container">
+                        <div class="skill-badge badge-pytorch">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch" class="badge-icon">
+                            PyTorch
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/tensorflow.svg" alt="TensorFlow 로고"/>
-                                <span class="skill-item-name">TensorFlow</span>
-                            </div>
-                            <p class="skill-item-description">Keras를 포함한 TensorFlow 생태계를 활용한 딥러닝 모델 개발 및 배포 경험이 있습니다. 대규모 데이터 처리 및 분산 학습 환경에서의 모델링에 익숙합니다.</p>
+                        <div class="skill-badge badge-tensorflow">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow" class="badge-icon">
+                            TensorFlow
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/huggingface.svg" alt="Hugging Face 로고"/>
-                                <span class="skill-item-name">Hugging Face Transformers</span>
-                            </div>
-                            <p class="skill-item-description">최신 NLP 모델 및 트랜스포머 아키텍처를 활용합니다. 사전 학습 모델 파인튜닝, 텍스트 생성, 감성 분석 등 다양한 NLP 작업 수행이 가능합니다.</p>
+                        <div class="skill-badge badge-huggingface">
+                            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" class="badge-icon">
+                            Hugging Face Transformers
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/langchain.svg" alt="LangChain 로고"/>
-                                <span class="skill-item-name">Langchain</span>
-                            </div>
-                            <p class="skill-item-description">LLM을 활용한 애플리케이션 개발 프레임워크로, RAG, 에이전트, 체인 구성 등을 통해 복잡한 LLM 기반 시스템 구축 경험이 있습니다.</p>
+                        <div class="skill-badge badge-langchain">
+                            <img src="https://python.langchain.com/img/favicon.ico" alt="LangChain" class="badge-icon">
+                            LangChain
                         </div>
-                         <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon"> <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-                                </svg>
-                                <span class="skill-item-name">Sesame, Zonos <span class="text-xs highlight-yellow">(TTS 관련 확인 필요)</span></span>
-                            </div>
-                            <p class="skill-item-description">Sesame TTS는 감정 표현이 풍부한 음성 합성에, Zonos는 [Zonos 관련 내용 추가 필요]에 활용되었습니다. 프로젝트에서 자연스러운 원어민 음성 제공에 기여했습니다.</p>
+                        <div class="skill-badge badge-ai">
+                            Sesame & Zonos (TTS)
                         </div>
                     </div>
                 </div>
-                
+
+                <div class="card mb-8">
+                    <h3 class="skills-card-title">백엔드 프레임워크</h3>
+                    <div class="skill-badges-container">
+                        <div class="skill-badge badge-fastapi">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI" class="badge-icon">
+                            FastAPI
+                        </div>
+                        <div class="skill-badge badge-spring">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot" class="badge-icon">
+                            Spring Boot
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <h3 class="skills-card-title">기타 도구 및 라이브러리</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/git.svg" alt="Git 로고"/>
-                                <span class="skill-item-name">Git</span>
-                            </div>
-                            <p class="skill-item-description">분산 버전 관리 시스템을 사용하여 코드 변경 사항을 효율적으로 추적하고 협업 프로젝트를 관리합니다. 브랜칭, 병합 등 워크플로우에 대한 이해가 있습니다.</p>
+                    <h3 class="skills-card-title">개발 도구 & 라이브러리</h3>
+                    <div class="skill-badges-container">
+                        <div class="skill-badge badge-git">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="badge-icon">
+                            Git
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/docker.svg" alt="Docker 로고"/>
-                                <span class="skill-item-name">Docker</span>
-                            </div>
-                            <p class="skill-item-description">컨테이너화 기술을 활용하여 개발 환경을 표준화하고 애플리케이션을 격리하여 배포 일관성을 확보합니다. Docker 이미지 생성 및 컨테이너 관리 경험이 있습니다.</p>
+                        <div class="skill-badge badge-docker">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" class="badge-icon">
+                            Docker
                         </div>
-                        <div class="skill-item-container">
-                             <div class="skill-item-header">
-                                 <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/scikitlearn.svg" alt="Scikit-learn 로고"/>
-                                <span class="skill-item-name">Scikit-learn</span>
-                            </div>
-                            <p class="skill-item-description">다양한 머신러닝 알고리즘과 모델 평가 도구를 제공하는 핵심 Python 라이브러리입니다. 기본적인 AI 개념을 정리하고 팀 내 공유 및 스터디 자료로 활용하여 AI 지식 전파에 기여했습니다.</p>
+                        <div class="skill-badge badge-scikit">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="Scikit-learn" class="badge-icon">
+                            Scikit-learn
                         </div>
-                         <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon-secondary"> <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93L15.6 7.21c.498.198.826.668.826 1.196v1.19c0 .527-.328.997-.825 1.195l-2.125.849c-.396.166-.71.496-.78.93l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93L6.4 13.6c-.497-.198-.825-.668-.825-1.196V11.21c0-.527.328-.997.825-1.195L8.45 9.16c.397-.166.71-.496.78-.93l.149-.894z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" />
-                                </svg>
-                                <span class="skill-item-name">NumPy</span>
-                            </div>
-                            <p class="skill-item-description">Python에서 과학 컴퓨팅을 위한 기본 패키지입니다. 다차원 배열, 선형 대수, 푸리에 변환 등을 제공하여 머신러닝 및 데이터 분석의 기반 기술로 활용됩니다.</p>
+                        <div class="skill-badge badge-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy" class="badge-icon">
+                            NumPy
                         </div>
-                        <div class="skill-item-container">
-                            <div class="skill-item-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="generic-skill-icon">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-                                </svg>
-                                <span class="skill-item-name">Simulink</span>
-                            </div>
-                            <p class="skill-item-description">MATLAB 기반의 블록 다이어그램 환경으로, 동적 시스템 및 임베디드 시스템의 모델링, 시뮬레이션 및 분석에 사용됩니다. BMS 제어 로직 설계 및 검증 경험이 있습니다.</p>
+                        <div class="skill-badge badge-default">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas" class="badge-icon">
+                            Pandas
+                        </div>
+                        <div class="skill-badge badge-matlab">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="Simulink" class="badge-icon">
+                            Simulink
                         </div>
                     </div>
                 </div>
@@ -559,77 +524,128 @@
                 <h2 class="section-title">프로젝트</h2>
                 <div class="space-y-16">
                     <div class="card">
-                        <h3 class="project-title text-3xl font-semibold mb-4">오마이픽 (Omypic)</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
-                                <p class="text-gray-300">‘오마이픽'은 사용자의 경험을 기반으로 개인 맞춤형 OPIc 스크립트 생성을 돕고, 실제 시험과 유사한 환경에서의 연습과 AI 기반 상세 피드백을 통해 OPIc 학습 효과를 극대화하는 서비스입니다. 2030 취업준비생들의 주된 어려움인 스크립트 작성, 실전 연습 부족, 피드백 부재를 해결하고자 기획되었습니다.</p>
+                        <div class="project-header mb-6">
+                            <h3 class="project-title text-3xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                                오마이픽 (Omypic)
+                            </h3>
+                            <div class="project-tags flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">AI/LLM</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">FastAPI</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">TTS</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">교육서비스</span>
                             </div>
+                            <p class="text-xl text-gray-300 leading-relaxed">
+                                <span class="text-yellow-400 font-bold">AI 기반 개인 맞춤형</span> OPIc 학습 플랫폼으로, 스크립트 생성부터 실전 연습, 상세 피드백까지
+                                <span class="text-blue-400 font-bold">원스톱 학습 솔루션</span>을 제공합니다.
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">역할 및 기여 (Back/AI):</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
-                                    <li>FastAPI 기반 백엔드 시스템 설계 및 API 개발 참여</li>
-                                    <li>AI 모델 연동 및 파이프라인 구축 (STT, LLM, TTS)</li>
-                                    <li>Celery와 Redis를 활용한 비동기 작업 처리 시스템 구현 (사용자 답변 평가 로직 등)으로 서버 부하 감소 및 응답 속도 개선</li>
-                                    <li>Gemini를 활용한 사용자 답변 평가, 예상 등급 산정 및 문법/어휘/발화량에 대한 세부 피드백 생성 로직 개발</li>
-                                    <li>Emotion BERT Routing 시스템 (Sesame, gTTS, BERT) 도입을 통한 TTS 음성 생성 시간 83% 단축 및 자연스러운 원어민 음성 품질 확보</li>
-                                    <li>AI 프롬프트 엔지니어링을 통한 스크립트 길이 및 피드백/예상 등급 정교화</li>
-                                    <li>데이터베이스(MongoDB) 스키마 설계 및 연동 참여</li>
-                                </ul>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-yellow-400 pl-4">핵심 기여도</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="list-none text-gray-300 space-y-3">
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">FastAPI 백엔드 아키텍처</strong> 설계 및 API 개발</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">AI 파이프라인 구축</strong> (STT, LLM, TTS 통합)</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-yellow-400 font-bold mr-2">★</span>
+                                            <span><strong class="text-yellow-400">TTS 성능 최적화</strong>: Sesame 파인튜닝 → <span class="text-green-400 font-bold">83% 시간 단축</span></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-yellow-400 font-bold mr-2">★</span>
+                                            <span><strong class="text-yellow-400">비동기 처리 시스템</strong>: Celery + Redis로 <span class="text-blue-400 font-bold">사용자 경험 대폭 개선</span></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">AI 프롬프트 엔지니어링</strong>으로 피드백 정확도 향상</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                             <div>
                                 <strong class="block text-lg text-gray-100 mb-1">사용 기술:</strong>
                                 <p class="text-gray-300">
-                                    <span class="font-medium text-gray-200">AI/ML:</span> Python, PyTorch, Hugging Face Transformers, LangChain, Gemini, Whisper, Sesame, gTTS, BERT (Emotion BERT Routing)<br>
+                                    <span class="font-medium text-gray-200">AI/ML:</span> Python, PyTorch, Hugging Face Transformers, LangChain, Gemini, Whisper, Sesame (파인튜닝), Zonos (데이터셋 구축)<br>
                                     <span class="font-medium text-gray-200">Backend:</span> Python FastAPI, Celery, Redis, MongoDB<br>
                                     <span class="font-medium text-gray-200">Infra:</span> Docker, Jenkins, Nginx, AWS EC2, S3, Prometheus, Grafana, Flower<br>
                                     <span class="font-medium text-gray-200">Frontend (팀 기술):</span> React, TypeScript, Vite, Redux, Tanstack Query, PWA
                                 </p>
                             </div>
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">주요 기능 및 구현 내용:</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
-                                    <li><strong>AI 기반 스크립트 생성:</strong> 사용자와의 한국어 대화를 통해 개인 경험 기반의 영어 OPIc 스크립트 자동 생성 (Gemini 활용)</li>
-                                    <li><strong>원어민 발음 TTS:</strong> 생성된 스크립트를 자연스러운 원어민 발음으로 청취 (Emotion BERT Routing: Sesame, gTTS, BERT)</li>
-                                    <li><strong>실전 모의고사:</strong> 실제 OPIc 시험과 유사한 UI/UX 환경에서 Background Survey 선택, 문제 청취, 답변 녹음 기능 제공</li>
-                                    <li><strong>AI 상세 피드백:</strong> 녹음된 답변에 대해 STT(Whisper) 변환 후 AI(Gemini)가 문법, 어휘, 발화량, 유창성 등을 분석하여 예상 등급 및 구체적인 개선 방안 제시</li>
-                                    <li><strong>유형별 연습:</strong> 맛보기, 콤보셋, 롤플레잉, 돌발문제 등 OPIc 주요 문제 유형별 집중 연습 기능</li>
-                                    <li><strong>비동기 처리:</strong> Celery, Redis를 도입하여 AI 평가 등 시간이 소요되는 작업을 비동기적으로 처리하여 사용자 경험 향상</li>
-                                </ul>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-blue-400 pl-4">핵심 기능</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <div class="flex items-center mb-2">
+                                            <div class="w-3 h-3 bg-blue-400 rounded-full mr-3"></div>
+                                            <h5 class="font-bold text-white">AI 스크립트 생성</h5>
+                                        </div>
+                                        <p class="text-gray-300 text-sm">한국어 대화 → 개인 맞춤 영어 스크립트 자동 생성</p>
+                                    </div>
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <div class="flex items-center mb-2">
+                                            <div class="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
+                                            <h5 class="font-bold text-white">원어민 TTS</h5>
+                                        </div>
+                                        <p class="text-gray-300 text-sm">Sesame 파인튜닝 → 자연스러운 원어민 발음</p>
+                                    </div>
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <div class="flex items-center mb-2">
+                                            <div class="w-3 h-3 bg-purple-400 rounded-full mr-3"></div>
+                                            <h5 class="font-bold text-white">실전 모의고사</h5>
+                                        </div>
+                                        <p class="text-gray-300 text-sm">실제 시험 환경 구현 → 녹음 및 답변 기능</p>
+                                    </div>
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <div class="flex items-center mb-2">
+                                            <div class="w-3 h-3 bg-orange-400 rounded-full mr-3"></div>
+                                            <h5 class="font-bold text-white">AI 상세 피드백</h5>
+                                        </div>
+                                        <p class="text-gray-300 text-sm">문법·어휘·발화량 분석 → 예상 등급 제시</p>
+                                    </div>
+                                </div>
                             </div>
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-3">성과:</strong>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-green-400 pl-4">주요 성과</h4>
 
-                                <div class="performance-metrics">
-                                    <div class="metric-card">
-                                        <div class="metric-value">42.1%</div>
-                                        <div class="metric-label">실전 연습 전환율</div>
+                                <div class="performance-metrics grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                                    <div class="metric-card bg-gray-800 border border-gray-600 text-white p-4 rounded-lg">
+                                        <div class="metric-value text-4xl font-bold text-white">42.1%</div>
+                                        <div class="metric-label text-gray-300 text-sm">실전 연습 전환율</div>
+                                        <div class="text-xs text-gray-400 mt-1">11.1%p 증가</div>
                                     </div>
-                                    <div class="metric-card">
-                                        <div class="metric-value">132+</div>
-                                        <div class="metric-label">서비스 사용자</div>
+                                    <div class="metric-card bg-gray-800 border border-gray-600 text-white p-4 rounded-lg">
+                                        <div class="metric-value text-4xl font-bold text-white">83%</div>
+                                        <div class="metric-label text-gray-300 text-sm">TTS 시간 단축</div>
+                                        <div class="text-xs text-gray-400 mt-1">3분27초 → 34초</div>
                                     </div>
-                                    <div class="metric-card">
-                                        <div class="metric-value">20K</div>
-                                        <div class="metric-label">누적 이벤트</div>
+                                    <div class="metric-card bg-gray-800 border border-gray-600 text-white p-4 rounded-lg">
+                                        <div class="metric-value text-3xl font-bold text-gray-200">132+</div>
+                                        <div class="metric-label text-gray-300 text-sm">서비스 사용자</div>
                                     </div>
-                                    <div class="metric-card">
-                                        <div class="metric-value">83%</div>
-                                        <div class="metric-label">TTS 시간 단축</div>
+                                    <div class="metric-card bg-gray-800 border border-gray-600 text-white p-4 rounded-lg">
+                                        <div class="metric-value text-3xl font-bold text-gray-200">IM1→IM3</div>
+                                        <div class="metric-label text-gray-300 text-sm">학습 효과 실증</div>
                                     </div>
                                 </div>
 
-                                <div class="chart-container">
+                                <div class="chart-container mb-6">
                                     <canvas id="ttsPerfChart" width="400" height="300"></canvas>
                                 </div>
 
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2 mt-4">
-                                    <li>2차 배포(3일) 후 실전 연습 기능 전환율 42.1% 달성 (1차 배포 대비 11.1%p 증가)</li>
-                                    <li>서비스 사용자 132명 이상, 누적 이벤트 수 2만 건, 페이지 조회수 8천 건 돌파 (2025년 4월 16일 기준)</li>
-                                    <li>장기 사용자(충남대 동문 김OO님, 8일 사용) OPIc 예상 등급 IM1 → IM3로 2단계 향상</li>
-                                    <li>Emotion BERT Routing 시스템 도입으로 TTS 음성 생성 시간 83% 단축 (12문장 기준 3분 27초 → 34초)</li>
-                                    <li>Google Analytics, Hotjar를 통한 사용자 행동 분석 기반 UI/UX 개선 사이클 구축</li>
-                                </ul>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <h5 class="text-white font-semibold mb-3">추가 성과</h5>
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li>• Google Analytics, Hotjar 기반 사용자 행동 분석 구축</li>
+                                        <li>• 누적 이벤트 2만건, 페이지 조회수 8천건 달성</li>
+                                        <li>• 실제 사용자 OPIc 등급 2단계 향상 사례 확보</li>
+                                    </ul>
+                                </div>
                             </div>
                             <div>
                                 <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
@@ -643,97 +659,200 @@
                     </div>
 
                     <div class="card">
-                        <h3 class="project-title text-3xl font-semibold mb-4">MCPanda - Agentic AI 학습 환경</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
-                                <p class="text-gray-300">LLM의 수학적 추론 능력 향상과 Agentic AI 기반 학습 환경 구축을 목표로 한 프로젝트입니다. Supervised Fine-Tuning 데이터셋 구축과 자동화된 환경 설정을 통해 AI 학습 효율성을 극대화했습니다.</p>
+                        <div class="project-header mb-6">
+                            <h3 class="project-title text-3xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                                MCPanda - Agentic AI 학습 환경
+                            </h3>
+                            <div class="project-tags flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">AI/ML</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">LoRA</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">수학추론</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">파인튜닝</span>
                             </div>
+                            <p class="text-xl text-gray-300 leading-relaxed">
+                                <span class="text-yellow-400 font-bold">제한된 VRAM 환경</span>에서 대규모 언어 모델의
+                                <span class="text-blue-400 font-bold">효율적 파인튜닝</span> 방법론을 확립한 연구 프로젝트입니다.
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">역할 및 기여:</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
-                                    <li>Supervised Fine-Tuning 데이터셋 설계 및 구축</li>
-                                    <li>Agentic AI를 활용한 자동화된 학습 환경 설계</li>
-                                    <li>Perplexity 모니터링을 통한 학습 안정화 (Early Stopping, Dropout, Learning Rate 조정)</li>
-                                    <li>제한된 VRAM 환경(10GB)에서 Unsloth 4bit Q_LoRA 기법 적용으로 메모리 효율성 향상</li>
-                                    <li>Hidden Math 지표를 활용한 모델 추론 능력 정량적 평가</li>
-                                </ul>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-yellow-400 pl-4">핵심 기여도</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="list-none text-gray-300 space-y-3">
+                                        <li class="flex items-start">
+                                            <span class="text-yellow-400 font-bold mr-2">★</span>
+                                            <span><strong class="text-yellow-400">Q_LoRA 기법 적용</strong>: 10GB VRAM 제약 환경에서 <strong class="text-white">메모리 효율성 극대화</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">Supervised Fine-Tuning 데이터셋</strong> 설계 및 구축</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">Agentic AI 자동화 환경</strong> 구축으로 개발 생산성 향상</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">Hidden Math 지표</strong> 활용한 모델 성능 정량 평가</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">사용 기술:</strong>
-                                <p class="text-gray-300">
-                                    <span class="font-medium text-gray-200">AI/ML:</span> Python, PyTorch, Hugging Face Transformers, LoRA, Q_LoRA (Unsloth), RAG<br>
-                                    <span class="font-medium text-gray-200">기타:</span> Git, Agentic AI Framework
-                                </p>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-blue-400 pl-4">핵심 기능</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <h5 class="font-bold text-white mb-2">효율적 파인튜닝</h5>
+                                        <p class="text-gray-300 text-sm">4bit Q_LoRA로 메모리 제약 극복</p>
+                                    </div>
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <h5 class="font-bold text-white mb-2">자동화 환경</h5>
+                                        <p class="text-gray-300 text-sm">Agentic AI 기반 학습 관리</p>
+                                    </div>
+                                </div>
                             </div>
+
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">주요 구현 내용:</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
-                                    <li><strong>Supervised Fine-Tuning 데이터셋:</strong> 수학 추론 성능 향상을 위한 고품질 학습 데이터 구축</li>
-                                    <li><strong>Agentic AI 환경:</strong> 자동화된 학습 환경 설정 및 관리 시스템 구현</li>
-                                    <li><strong>효율적 파인튜닝:</strong> 4bit Q_LoRA 기법으로 메모리 제약 극복</li>
-                                    <li><strong>성능 모니터링:</strong> Perplexity 추적 및 학습 과정 최적화</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">성과:</strong>
-                                <p class="text-gray-300">제한된 하드웨어 환경에서 대규모 언어 모델의 효율적 파인튜닝 방법론 확립. Agentic AI를 통한 자동화된 학습 환경으로 개발 생산성 향상. Q_LoRA 경량화 기법 실제 적용 경험 확보.</p>
-                            </div>
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
-                                <p class="text-gray-300">
-                                    <a href="https://github.com/Joinerlee" class="hover:underline" target="_blank">GitHub Repository</a>
-                                </p>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-green-400 pl-4">주요 성과</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li>• 제한된 하드웨어 환경에서 대규모 언어 모델 파인튜닝 방법론 확립</li>
+                                        <li>• Q_LoRA 경량화 기법 실제 적용 경험 확보</li>
+                                        <li>• Agentic AI를 통한 자동화된 학습 환경으로 개발 생산성 향상</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <h3 class="project-title text-3xl font-semibold mb-4">SAM-6D: Zero-Shot 6D Object Pose Estimation</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
-                                <p class="text-gray-300">Segment Anything Model(SAM)을 활용한 Zero-Shot 6D 객체 자세 추정 시스템입니다. 별도의 학습 없이도 3D 공간에서 객체의 위치와 방향을 정확하게 추정하는 혁신적인 접근법을 구현했습니다.</p>
+                        <div class="project-header mb-6">
+                            <h3 class="project-title text-3xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                                SAM-6D 기반 포탄 자세추정 그립퍼 시스템
+                            </h3>
+                            <div class="project-tags flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">로보틱스</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">SAM-6D</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">그립퍼</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">자세추정</span>
                             </div>
+                            <p class="text-xl text-gray-300 leading-relaxed">
+                                SAM-6D를 활용하여 <span class="text-yellow-400 font-bold">포탄의 정확한 자세추정</span>을 수행하고
+                                <span class="text-blue-400 font-bold">정밀 그립퍼 시스템</span>을 개발한 로보틱스 프로젝트입니다.
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">핵심 기술:</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
-                                    <li>SAM 기반 Zero-Shot 객체 분할 및 포즈 추정</li>
-                                    <li>6DOF(6 Degrees of Freedom) 자세 추정 알고리즘</li>
-                                    <li>실시간 3D 객체 위치 및 방향 계산</li>
-                                    <li>컴퓨터 비전 및 3D 기하학 적용</li>
-                                </ul>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-yellow-400 pl-4">핵심 기여도</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="list-none text-gray-300 space-y-3">
+                                        <li class="flex items-start">
+                                            <span class="text-yellow-400 font-bold mr-2">★</span>
+                                            <span><strong class="text-yellow-400">SAM-6D 알고리즘 적용</strong>: 포탄의 <strong class="text-white">정밀한 6DOF 자세추정</strong> 구현</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">그립퍼 제어 시스템</strong> 설계 및 자세추정 연동</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">실시간 로봇 제어</strong> 알고리즘 개발</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
-                                <p class="text-gray-300">
-                                    <a href="https://github.com/Joinerlee" class="hover:underline" target="_blank">GitHub Repository</a>
-                                </p>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-blue-400 pl-4">핵심 기능</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <h5 class="font-bold text-white mb-2">포탄 자세추정</h5>
+                                        <p class="text-gray-300 text-sm">SAM-6D 기반 정밀 위치·방향 인식</p>
+                                    </div>
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <h5 class="font-bold text-white mb-2">그립퍼 제어</h5>
+                                        <p class="text-gray-300 text-sm">자세정보 기반 정밀 파지 시스템</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-green-400 pl-4">기술적 성과</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li>• SAM-6D를 활용한 포탄 객체의 정밀 자세추정 시스템 구축</li>
+                                        <li>• 자세정보와 그립퍼 제어를 연동한 통합 로보틱스 시스템 개발</li>
+                                        <li>• 실시간 처리 가능한 효율적인 포탄 핸들링 알고리즘 구현</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <h3 class="project-title text-3xl font-semibold mb-4">ThinkGemma3n: Non-Logical-thinking Model</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
-                                <p class="text-gray-300">Gemma3 모델을 기반으로 한 비논리적 사고 모델 연구 프로젝트입니다. 기존의 논리적 추론과는 다른 창의적이고 직관적인 사고 패턴을 학습하는 모델을 개발했습니다.</p>
+                        <div class="project-header mb-6">
+                            <h3 class="project-title text-3xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                                ThinkGemma3n: Non-Logical-thinking Model
+                            </h3>
+                            <div class="project-tags flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">LLM</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">Gemma3</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">창의적사고</span>
+                                <span class="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm font-medium border border-gray-700">연구</span>
                             </div>
+                            <p class="text-xl text-gray-300 leading-relaxed">
+                                기존 논리적 추론을 벗어나 <span class="text-yellow-400 font-bold">창의적이고 직관적인 사고</span> 패턴을 학습하는
+                                <span class="text-blue-400 font-bold">혁신적 AI 모델</span> 연구 프로젝트입니다.
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">핵심 기술:</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
-                                    <li>Gemma3 아키텍처 기반 모델 설계</li>
-                                    <li>비논리적 사고 패턴 학습 데이터셋 구축</li>
-                                    <li>창의적 추론 능력 평가 메트릭 개발</li>
-                                    <li>사고 다양성 증진을 위한 모델 최적화</li>
-                                </ul>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-yellow-400 pl-4">핵심 기여도</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="list-none text-gray-300 space-y-3">
+                                        <li class="flex items-start">
+                                            <span class="text-yellow-400 font-bold mr-2">★</span>
+                                            <span><strong class="text-yellow-400">비논리적 사고 패턴</strong> 학습 데이터셋 구축 및 <strong class="text-white">모델 설계</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">Gemma3 아키텍처</strong> 기반 창의적 추론 모델 개발</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-400 font-bold mr-2">✓</span>
+                                            <span><strong class="text-white">창의적 추론 평가 메트릭</strong> 개발 및 적용</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
-                                <p class="text-gray-300">
-                                    <a href="https://github.com/Joinerlee" class="hover:underline" target="_blank">GitHub Repository</a>
-                                </p>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-blue-400 pl-4">핵심 기능</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <h5 class="font-bold text-white mb-2">비논리적 사고 학습</h5>
+                                        <p class="text-gray-300 text-sm">창의적 추론 패턴 데이터셋</p>
+                                    </div>
+                                    <div class="feature-card p-4 bg-gray-800 rounded-lg border border-gray-700">
+                                        <h5 class="font-bold text-white mb-2">사고 다양성 증진</h5>
+                                        <p class="text-gray-300 text-sm">모델 최적화 및 평가</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4 border-l-4 border-green-400 pl-4">연구 성과</h4>
+                                <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li>• 기존 논리적 추론 모델과 차별화된 창의적 사고 접근법 제시</li>
+                                        <li>• 비논리적 사고 패턴 학습을 위한 새로운 데이터셋 구축</li>
+                                        <li>• 창의적 추론 능력 평가를 위한 독창적 메트릭 개발</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
