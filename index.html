@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이재욱 | AI 개발자 포트폴리오</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -164,47 +165,91 @@
         .highlight-green { color: #34d399; }
         .highlight-sky { color: var(--primary-accent); }
         
-        .skill-item-container {
-            padding: 1rem;
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
             border-radius: 0.5rem;
             background-color: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
-        .skill-item-container:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            transform: translateY(-3px);
+        .skill-badge:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
-        .skill-item-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        .skill-item-header svg, .skill-item-header img {
-            width: 1.75rem;
-            height: 1.75rem;
-            margin-right: 0.75rem;
+        .skill-badge img {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.5rem;
             flex-shrink: 0;
         }
-        .skill-item-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-color);
+        .skill-badge.primary {
+            background-color: rgba(96, 165, 250, 0.1);
+            border-color: rgba(96, 165, 250, 0.3);
+            color: #60a5fa;
         }
-        .skill-item-description {
-            font-size: 0.875rem;
-            color: #b0b0b0;
-            line-height: 1.6;
-            flex-grow: 1;
+        .skill-badge.secondary {
+            background-color: rgba(250, 204, 21, 0.1);
+            border-color: rgba(250, 204, 21, 0.3);
+            color: #facc15;
         }
-        .skill-item-header .generic-skill-icon {
+        .skill-badge.accent {
+            background-color: rgba(52, 211, 153, 0.1);
+            border-color: rgba(52, 211, 153, 0.3);
+            color: #34d399;
+        }
+        .skill-section-container {
+            margin-bottom: 2rem;
+        }
+        .skill-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
             color: var(--primary-accent);
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.5rem;
         }
-        .skill-item-header .generic-skill-icon-secondary {
-            color: var(--secondary-accent);
+        .skill-badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .metric-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-accent);
+            margin-bottom: 0.5rem;
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+        .chart-container {
+            max-width: 400px;
+            margin: 2rem auto;
         }
 
 
@@ -273,6 +318,8 @@
                 </div>
                 <div class="space-x-6">
                     <a href="https://github.com/Joinerlee" id="github-link" class="header-link text-lg" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
+                    <span class="hidden sm:inline text-gray-600">|</span>
+                    <a href="https://www.notion.so/2584f8d8d9b680969264f16d93dcc8cc" class="header-link text-lg" target="_blank" rel="noopener noreferrer">개인 공부 노트</a>
                 </div>
             </div>
         </header>
@@ -318,7 +365,7 @@
                 <h2 class="section-title">경력</h2>
                 <div class="card max-w-3xl mx-auto">
                     <h3 class="text-xl font-semibold">KAIST 모빌리티 연구소, 연구원</h3>
-                    <p class="text-gray-400 mb-2">2022.MM ~ 2024.04 <span class="text-xs highlight-yellow">(정확한 월 확인 필요)</span></p>
+                    <p class="text-gray-400 mb-2">2022.04 ~ 2024.04</p>
                     <strong class="block text-lg text-gray-100 mt-4 mb-2">주요 연구: 배터리 관리 시스템 (BMS)</strong>
                     <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
                         <li>핵심 알고리즘: <span class="font-medium text-gray-200">EKF, DEKF</span></li>
@@ -551,8 +598,32 @@
                                 </ul>
                             </div>
                             <div>
-                                <strong class="block text-lg text-gray-100 mb-1">성과:</strong>
-                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
+                                <strong class="block text-lg text-gray-100 mb-3">성과:</strong>
+
+                                <div class="performance-metrics">
+                                    <div class="metric-card">
+                                        <div class="metric-value">42.1%</div>
+                                        <div class="metric-label">실전 연습 전환율</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">132+</div>
+                                        <div class="metric-label">서비스 사용자</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">20K</div>
+                                        <div class="metric-label">누적 이벤트</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-value">83%</div>
+                                        <div class="metric-label">TTS 시간 단축</div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-container">
+                                    <canvas id="ttsPerfChart" width="400" height="300"></canvas>
+                                </div>
+
+                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2 mt-4">
                                     <li>2차 배포(3일) 후 실전 연습 기능 전환율 42.1% 달성 (1차 배포 대비 11.1%p 증가)</li>
                                     <li>서비스 사용자 132명 이상, 누적 이벤트 수 2만 건, 페이지 조회수 8천 건 돌파 (2025년 4월 16일 기준)</li>
                                     <li>장기 사용자(충남대 동문 김OO님, 8일 사용) OPIc 예상 등급 IM1 → IM3로 2단계 향상</li>
@@ -572,48 +643,96 @@
                     </div>
 
                     <div class="card">
-                        <h3 class="project-title text-3xl font-semibold mb-4">MCPanda</h3>
+                        <h3 class="project-title text-3xl font-semibold mb-4">MCPanda - Agentic AI 학습 환경</h3>
                         <div class="space-y-4">
                             <div>
                                 <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
-                                <p class="text-gray-300">LLM의 수학적 추론 능력 향상을 목표로 한 프로젝트입니다. 모델의 Perplexity를 지속적으로 모니터링하고, 다양한 파인튜닝 기법을 적용하여 성능 개선을 시도했습니다.</p>
+                                <p class="text-gray-300">LLM의 수학적 추론 능력 향상과 Agentic AI 기반 학습 환경 구축을 목표로 한 프로젝트입니다. Supervised Fine-Tuning 데이터셋 구축과 자동화된 환경 설정을 통해 AI 학습 효율성을 극대화했습니다.</p>
                             </div>
                             <div>
                                 <strong class="block text-lg text-gray-100 mb-1">역할 및 기여:</strong>
-                                <p class="text-gray-300">모델 학습 및 평가 파이프라인 구축, 파인튜닝 전략 수립 및 실행. Perplexity 모니터링을 통한 학습 안정화 (Early Stopping, Dropout, Learning Rate 조정), 내부 테스트 데이터셋을 활용한 추론 정확도(Hidden Math) 평가. 제한된 VRAM 환경(10GB)에서 LoRA 적용의 어려움을 Unsloth를 활용한 4bit Q_LoRA (Quantization LoRA)로 해결 시도.</p>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
+                                    <li>Supervised Fine-Tuning 데이터셋 설계 및 구축</li>
+                                    <li>Agentic AI를 활용한 자동화된 학습 환경 설계</li>
+                                    <li>Perplexity 모니터링을 통한 학습 안정화 (Early Stopping, Dropout, Learning Rate 조정)</li>
+                                    <li>제한된 VRAM 환경(10GB)에서 Unsloth 4bit Q_LoRA 기법 적용으로 메모리 효율성 향상</li>
+                                    <li>Hidden Math 지표를 활용한 모델 추론 능력 정량적 평가</li>
+                                </ul>
                             </div>
                             <div>
                                 <strong class="block text-lg text-gray-100 mb-1">사용 기술:</strong>
-                                <p class="text-gray-300"><span class="font-medium text-gray-200">AI/ML:</span> Python, PyTorch, Hugging Face Transformers, LoRA, Q_LoRA (Unsloth), RAG, Perplexity Monitoring <br>
-                                   <span class="font-medium text-gray-200">기타:</span> Git</p>
-                            </div>
-                            <div>
-                                <strong class="block text-lg text-gray-100 mb-1">주요 기능 및 구현 내용:</strong>
                                 <p class="text-gray-300">
-                                    - **Perplexity 모니터링 및 학습 안정화:**
-                                        <ul class="list-disc list-inside text-gray-400 pl-4">
-                                            <li>Early Stopping 도입: Validation Loss 상승 시 조기 종료</li>
-                                            <li>Dropout 적용 (0.3): 과적합 방지 및 loss 안정화</li>
-                                            <li>Learning Rate 감소: 1e-5 → 5e-6으로 조정하여 loss 진동 최소화</li>
-                                        </ul>
-                                    - **추론 능력 평가:** 내부 테스트 데이터셋으로 Hidden Math 지표를 활용하여 정확도 테스트 (43.0 → 42.9로 미미한 변화 관찰)
-                                    - **효율적 파인튜닝:**
-                                        <ul class="list-disc list-inside text-gray-400 pl-4">
-                                            <li>LoRA 적용 시도 중 VRAM 부족 (10GB) 문제 발생</li>
-                                            <li>Unsloth 라이브러리를 활용한 4bit Q_LoRA (Quantization LoRA) 도입으로 메모리 제약 극복 시도</li>
-                                        </ul>
-                                     - **RAG (Retrieval Augmented Generation)** 기술 통합
+                                    <span class="font-medium text-gray-200">AI/ML:</span> Python, PyTorch, Hugging Face Transformers, LoRA, Q_LoRA (Unsloth), RAG<br>
+                                    <span class="font-medium text-gray-200">기타:</span> Git, Agentic AI Framework
                                 </p>
                             </div>
                             <div>
+                                <strong class="block text-lg text-gray-100 mb-1">주요 구현 내용:</strong>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
+                                    <li><strong>Supervised Fine-Tuning 데이터셋:</strong> 수학 추론 성능 향상을 위한 고품질 학습 데이터 구축</li>
+                                    <li><strong>Agentic AI 환경:</strong> 자동화된 학습 환경 설정 및 관리 시스템 구현</li>
+                                    <li><strong>효율적 파인튜닝:</strong> 4bit Q_LoRA 기법으로 메모리 제약 극복</li>
+                                    <li><strong>성능 모니터링:</strong> Perplexity 추적 및 학습 과정 최적화</li>
+                                </ul>
+                            </div>
+                            <div>
                                 <strong class="block text-lg text-gray-100 mb-1">성과:</strong>
-                                <p class="text-gray-300">제한된 하드웨어 환경에서 대규모 언어 모델의 파인튜닝 가능성을 탐색하고, Q_LoRA와 같은 경량화 기법의 실제 적용 경험 확보. Perplexity 모니터링을 통해 학습 과정을 안정화하고 과적합을 방지하는 전략 수립. Hidden Math 지표를 통해 모델의 추론 능력을 정량적으로 평가.</p>
+                                <p class="text-gray-300">제한된 하드웨어 환경에서 대규모 언어 모델의 효율적 파인튜닝 방법론 확립. Agentic AI를 통한 자동화된 학습 환경으로 개발 생산성 향상. Q_LoRA 경량화 기법 실제 적용 경험 확보.</p>
                             </div>
                             <div>
                                 <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
                                 <p class="text-gray-300">
-                                    <a href="#" class="hover:underline">[GitHub Repository (준비 중)]</a>, 
-                                    <a href="#" class="hover:underline">[관련 자료 (준비 중)]</a>
+                                    <a href="https://github.com/Joinerlee" class="hover:underline" target="_blank">GitHub Repository</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="project-title text-3xl font-semibold mb-4">SAM-6D: Zero-Shot 6D Object Pose Estimation</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
+                                <p class="text-gray-300">Segment Anything Model(SAM)을 활용한 Zero-Shot 6D 객체 자세 추정 시스템입니다. 별도의 학습 없이도 3D 공간에서 객체의 위치와 방향을 정확하게 추정하는 혁신적인 접근법을 구현했습니다.</p>
+                            </div>
+                            <div>
+                                <strong class="block text-lg text-gray-100 mb-1">핵심 기술:</strong>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
+                                    <li>SAM 기반 Zero-Shot 객체 분할 및 포즈 추정</li>
+                                    <li>6DOF(6 Degrees of Freedom) 자세 추정 알고리즘</li>
+                                    <li>실시간 3D 객체 위치 및 방향 계산</li>
+                                    <li>컴퓨터 비전 및 3D 기하학 적용</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
+                                <p class="text-gray-300">
+                                    <a href="https://github.com/Joinerlee" class="hover:underline" target="_blank">GitHub Repository</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="project-title text-3xl font-semibold mb-4">ThinkGemma3n: Non-Logical-thinking Model</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <strong class="block text-lg text-gray-100 mb-1">프로젝트 설명:</strong>
+                                <p class="text-gray-300">Gemma3 모델을 기반으로 한 비논리적 사고 모델 연구 프로젝트입니다. 기존의 논리적 추론과는 다른 창의적이고 직관적인 사고 패턴을 학습하는 모델을 개발했습니다.</p>
+                            </div>
+                            <div>
+                                <strong class="block text-lg text-gray-100 mb-1">핵심 기술:</strong>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1.5 pl-2">
+                                    <li>Gemma3 아키텍처 기반 모델 설계</li>
+                                    <li>비논리적 사고 패턴 학습 데이터셋 구축</li>
+                                    <li>창의적 추론 능력 평가 메트릭 개발</li>
+                                    <li>사고 다양성 증진을 위한 모델 최적화</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong class="block text-lg text-gray-100 mb-1">결과물 링크:</strong>
+                                <p class="text-gray-300">
+                                    <a href="https://github.com/Joinerlee" class="hover:underline" target="_blank">GitHub Repository</a>
                                 </p>
                             </div>
                         </div>
@@ -776,7 +895,74 @@
         });
         window.addEventListener('scroll', updateActiveDot);
         // Initial call to set active dot on page load
-        updateActiveDot(); 
+        updateActiveDot();
+
+        // TTS Performance Chart
+        const ctx = document.getElementById('ttsPerfChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['기존 시스템', 'Emotion BERT Routing'],
+                    datasets: [{
+                        label: 'TTS 생성 시간 (초)',
+                        data: [207, 34],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(96, 165, 250, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(96, 165, 250, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'TTS 시스템 성능 비교 (12문장 기준)',
+                            color: '#e0e0e0',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '시간 (초)',
+                                color: '#e0e0e0'
+                            },
+                            ticks: {
+                                color: '#e0e0e0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#e0e0e0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
